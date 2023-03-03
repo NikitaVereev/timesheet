@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0 box-border;
+}
+
+body,
+html {
+  @apply bg-[linear-gradient(-180deg,#654ea3,#eaafc8)] bg-no-repeat w-full h-full text-[#f7f7f7];
+}
