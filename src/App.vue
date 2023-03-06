@@ -5,7 +5,6 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
       <h3>Корпоративный портал учёта рабочего времени</h3>
       <nav>
         <RouterLink to="/">Главная</RouterLink>

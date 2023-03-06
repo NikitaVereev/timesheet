@@ -1,3 +1,4 @@
+import SingleTaskView from '@/views/SingleTaskView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -6,8 +7,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'task',
+      props: true,
+
       component: HomeView
+    },
+    {
+      path: '/task/:id/',
+      name: 'simpleTask',
+      props: true,
+      component: SingleTaskView
     },
     {
       path: '/about',

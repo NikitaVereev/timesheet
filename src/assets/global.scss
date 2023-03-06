@@ -10,3 +10,7 @@ body,
 html {
   @apply bg-[linear-gradient(-180deg,#654ea3,#eaafc8)] bg-no-repeat w-full h-full text-[#f7f7f7];
 }
+
+.wrapper {
+  @apply max-w-7xl mx-auto px-4;
+}
