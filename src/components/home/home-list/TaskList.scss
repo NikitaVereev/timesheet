@@ -2,5 +2,5 @@ h1 {
   @apply text-2xl font-bold pb-1;
 }
 .task {
-  @apply flex gap-6 items-start py-3 my-5;
+  @apply flex flex-wrap gap-6 items-start py-3 my-5;
 }

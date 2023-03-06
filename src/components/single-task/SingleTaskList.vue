@@ -14,3 +14,7 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+@import './SingleTask.scss';
+</style>

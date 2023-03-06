@@ -4,19 +4,19 @@ import type { ITask } from '@/components/types/task.interface'
 export default {
   data() {
     return {
-      task: {
+      allTasks: {
         title: '',
         body: '',
         isActive: false
-      } as ITask
+      } as any
     }
   },
   methods: {
     addNewTask() {
-      if (this.task.title !== '' && this.task.body !== '') {
-        this.task.id = Date.now()
-        this.$emit('create', this.task)
-        this.task = {
+      if (this.allTasks.title !== '' && this.allTasks.body !== '') {
+        this.allTasks.id = Date.now()
+        this.$emit('create', this.allTasks)
+        this.allTasks = {
           title: '',
           body: '',
           isActive: false
@@ -31,8 +31,12 @@ export default {
 
 <template>
   <form @submit.prevent>
-    <input v-model="task.title" type="text" placeholder="Название проекта" />
-    <input v-model="task.body" type="text" placeholder="Описание проекта" />
-    <button @click="addNewTask">Добавить проект</button>
+    <input v-model="allTasks.title" type="text" placeholder="Название проекта" />
+    <input v-model="allTasks.body" type="text" placeholder="Описание проекта" />
+    <my-button @click="addNewTask">Добавить проект</my-button>
   </form>
 </template>
+
+<style scoped>
+@import './SingleTask.scss';
+</style>

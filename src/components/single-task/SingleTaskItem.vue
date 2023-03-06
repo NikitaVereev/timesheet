@@ -20,7 +20,11 @@ export default {
     {{ allTasks.isActive }}
   </div>
   <div class="btn-wrapper">
-    <button>Редактировать</button>
-    <button @click="$emit('remove', allTasks)">Удалить</button>
+    <my-button>Редактировать</my-button>
+    <my-button @click="$emit('remove', allTasks)">Удалить</my-button>
   </div>
 </template>
+
+<style scoped>
+@import './SingleTask.scss';
+</style>

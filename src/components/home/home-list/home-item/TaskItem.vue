@@ -37,10 +37,10 @@ export default {
 
     {{ task.isActive }}
     <div class="btn-wrapper">
-      <RouterLink :to="`/task/${task.id}`">Показать</RouterLink>
+      <my-button><RouterLink :to="`/task/${task.id}`">Показать</RouterLink></my-button>
       <RouterView></RouterView>
-      <button>Редактировать</button>
-      <button @click="$emit('remove', task)">Удалить</button>
+      <my-button>Редактировать</my-button>
+      <my-button @click="$emit('remove', task)">Удалить</my-button>
     </div>
   </div>
 </template>

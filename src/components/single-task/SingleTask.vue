@@ -7,7 +7,7 @@ export default {
     singleTasks: {
       type: Array,
       required: true
-    }
+    } as any
   },
   components: {
     SingleTaskForm,
@@ -15,10 +15,15 @@ export default {
   },
   methods: {
     removeTask(allTasks: any) {
-      console.log('ddd', this.singleTasks)
+      console.log('ddd', this.singleTasks[0].allTasks.length)
+      // eslint-disable-next-line vue/no-mutating-props
+      this.singleTasks[0].allTasks = this.singleTasks[0].allTasks.filter(
+        (t: any) => t.id !== allTasks.id
+      )
     },
     addNewTask(allTasks: any) {
-      this.singleTasks.push()
+      // eslint-disable-next-line vue/no-mutating-props
+      this.singleTasks[0].allTasks.push(allTasks)
     }
   }
 }
@@ -26,14 +31,17 @@ export default {
 
 <template>
   <div class="wrapper">
+    <SingleTaskForm @create="addNewTask" />
     <div class="tasks" v-for="singleTask in singleTasks" :key="singleTask.id">
       <div class="heading">
         <h1>{{ singleTask.title }}</h1>
         <p>{{ singleTask.body }}</p>
       </div>
-      <SingleTaskForm @create="addNewTask" />
 
-      <SingleTaskList :singleTask="singleTask" @remove="removeTask" />
+      <div v-if="singleTasks[0].allTasks.length !== 0">
+        <SingleTaskList :singleTask="singleTask" @remove="removeTask" />
+      </div>
+      <div v-else><h1>В данном проекте нет задач. Добавьте их!</h1></div>
     </div>
   </div>
 </template>
