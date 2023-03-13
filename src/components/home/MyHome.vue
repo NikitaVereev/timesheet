@@ -2,7 +2,7 @@
 import TaskList from '@/components/home/home-list/TaskList.vue'
 import type { ITask } from '../types/task.interface'
 import TaskForm from './home-list/home-form/TaskForm.vue'
-import formatDateMixin from '@/mixins/formatDateMixin'
+
 import axios from 'axios'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -13,12 +13,8 @@ export default {
       tasks: [] as ITask[]
     }
   },
-  mixins: [formatDateMixin],
+
   computed: {
-    //@ts-ignore
-    formattedDate() {
-      return this.formatDate(this.date)
-    },
     ...mapState({
       tasks: (state: any) => state.task.tasks
     })
