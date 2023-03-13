@@ -28,21 +28,70 @@ export default {
   methods: {
     removeTask(task: any) {
       console.log(this.tasks.length)
-      this.tasks = this.tasks.filter((t: any) => t.id !== task.id)
+      this.deleteTasks(task)
     },
-    addNewTask(task: any) {
-      this.tasks.push(task)
+    addNewTask(task: any, allTasks: any) {
+      this.postProjects(task, allTasks)
+    },
+    putProjectTask(task: any) {
+      this.putProject(task)
     },
     async fetchTasks() {
       try {
         const response = await axios.get('https://634bc632d90b984a1e3f3996.mockapi.io/api')
         this.tasks = response.data
+        console.log(this.tasks)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async deleteTasks(task: any) {
+      try {
+        const response = await axios.delete(
+          `https://634bc632d90b984a1e3f3996.mockapi.io/api/${task.id}`,
+          {
+            headers: {
+              Prefer: `code=200, example=Example ${task.id}`
+            }
+          }
+        )
+        this.tasks = response.data
+        window.location.reload()
+        console.log(this.tasks)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async postProjects(task: any) {
+      try {
+        const response = await axios.post('https://634bc632d90b984a1e3f3996.mockapi.io/api', task)
+        this.tasks = response.data
+        window.location.reload()
         console.log(response.data)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async putProject(task: any) {
+      try {
+        const response = await axios.put(
+          `https://634bc632d90b984a1e3f3996.mockapi.io/api/${task.id}`,
+          task,
+          {
+            headers: {
+              Prefer: `code=200, example=Example ${task.id}`
+            }
+          }
+        )
+        this.tasks = response.data
+        window.location.reload()
+        console.log(this.tasks)
       } catch (e) {
         console.error(e)
       }
     }
   },
+
   mounted() {
     setInterval(() => {
       this.date = new Date()
@@ -55,9 +104,12 @@ export default {
 <template>
   <div class="wrapper">
     <div class="tasks">
+      <h1>Проект</h1>
       <TaskForm @create="addNewTask" />
+      <h1>Задачи</h1>
+
       <div>{{ formattedDate }}</div>
-      <TaskList @remove="removeTask" :tasks="tasks" />
+      <TaskList @put="putProjectTask" @remove="removeTask" :tasks="tasks" />
     </div>
   </div>
 </template>

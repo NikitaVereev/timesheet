@@ -1,10 +1,11 @@
 <script lang="tsx">
 import type { ITask } from '@/components/types/task.interface'
+import router from '@/router'
 
 export default {
   data() {
     return {
-      task: {
+      project: {
         title: '',
         body: '',
         isActive: false
@@ -13,14 +14,14 @@ export default {
   },
   methods: {
     addNewTask() {
-      if (this.task.title !== '' && this.task.body !== '') {
-        this.task.id = Date.now()
-        this.$emit('create', this.task)
-        this.task = {
+      if (this.project.title !== '' && this.project.body !== '') {
+        this.$emit('create', this.project)
+        this.project = {
           title: '',
           body: '',
           isActive: false
         }
+        // router.push(`/task/${this.project.id}`)
       } else {
         alert('Заполните все поля')
       }
@@ -31,8 +32,8 @@ export default {
 
 <template>
   <form @submit.prevent>
-    <input v-model="task.title" type="text" placeholder="Название проекта" />
-    <input v-model="task.body" type="text" placeholder="Описание проекта" />
-    <button @click="addNewTask">Добавить проект</button>
+    <my-input v-model="project.title" type="text" placeholder="Название проекта" />
+    <my-input v-model="project.body" type="text" placeholder="Описание проекта" />
+    <my-button @click="addNewTask">Добавить проект</my-button>
   </form>
 </template>

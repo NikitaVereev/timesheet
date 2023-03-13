@@ -15,7 +15,13 @@ export default {
 <template>
   <h1>Список задач</h1>
   <div class="task">
-    <TaskItem @remove="$emit('remove', task)" :task="task" v-for="task in tasks" :key="task.id" />
+    <TaskItem
+      @put="$emit('put', task)"
+      @remove="$emit('remove', task)"
+      :task="task"
+      v-for="task in tasks"
+      :key="task.id"
+    />
   </div>
 </template>
 

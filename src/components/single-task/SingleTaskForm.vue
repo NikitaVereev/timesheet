@@ -1,22 +1,28 @@
 <script lang="tsx">
 import type { ITask } from '@/components/types/task.interface'
+import router from '@/router'
 
 export default {
   data() {
     return {
-      allTasks: {
+      project: {
         title: '',
         body: '',
-        isActive: false
-      } as any
+        isActive: false,
+        createdTime: 0,
+        time: 0
+      } as any,
+      paramsId: this.$route.params.id
     }
   },
+
   methods: {
     addNewTask() {
-      if (this.allTasks.title !== '' && this.allTasks.body !== '') {
-        this.allTasks.id = Date.now()
-        this.$emit('create', this.allTasks)
-        this.allTasks = {
+      if (this.project.title !== '' && this.project.body !== '' && this.project.time < 24) {
+        this.$emit('create', this.project, this.paramsId)
+        console.log(this.paramsId)
+
+        this.project = {
           title: '',
           body: '',
           isActive: false
@@ -31,12 +37,9 @@ export default {
 
 <template>
   <form @submit.prevent>
-    <input v-model="allTasks.title" type="text" placeholder="Название проекта" />
-    <input v-model="allTasks.body" type="text" placeholder="Описание проекта" />
+    <my-input v-model="project.title" type="text" placeholder="Название проекта" />
+    <my-input v-model="project.body" type="text" placeholder="Описание проекта" />
+    <my-input v-model="project.time" type="number" placeholder="Времени на задачу" />
     <my-button @click="addNewTask">Добавить проект</my-button>
   </form>
 </template>
-
-<style scoped>
-@import './SingleTask.scss';
-</style>

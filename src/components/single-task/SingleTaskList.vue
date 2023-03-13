@@ -3,14 +3,14 @@ import SingleTaskItem from './SingleTaskItem.vue'
 
 export default {
   components: { SingleTaskItem },
-  props: { singleTask: { type: Object, required: true } }
+  props: { taskList: { type: Object, required: true } }
 }
 </script>
 
 <template>
   <div class="task-wrapper">
-    <div class="task" v-for="allTasks in singleTask.allTasks" :key="allTasks.id">
-      <SingleTaskItem :allTasks="allTasks" @remove="$emit('remove', allTasks)" />
+    <div v-for="task in taskList" :key="task.id">
+      <SingleTaskItem @remove="$emit('remove', task)" :task="task" />
     </div>
   </div>
 </template>

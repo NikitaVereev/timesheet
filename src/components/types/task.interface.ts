@@ -11,5 +11,6 @@ export interface ITask {
   body: string
   isActive: boolean
   allTasks: ISingleTask[]
+  created?: Date
   addNewTask?: () => void
 }

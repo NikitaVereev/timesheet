@@ -17,3 +17,6 @@
 .text-wrapper p {
   @apply text-opacity-80 text-white;
 }
+textarea {
+  @apply text-white bg-black;
+}

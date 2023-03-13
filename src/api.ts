@@ -1,18 +1,36 @@
-export default {
-  async fetchTasksById(id: number) {
-    try {
-      const response = await axios.get(
-        `https://634bc632d90b984a1e3f3996.mockapi.io/api/?id=${id}`,
-        {
-          headers: {
-            Prefer: `code=200, example=Example ${id}`
-          }
-        }
-      )
-      console.log(response.data)
-      return response.data
-    } catch (e) {
-      console.error('eee', e)
+import axios from 'axios'
+
+const instance = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+export const $api = async ({ url, type = 'GET', body }: any) => {
+  let data
+
+  try {
+    switch (type) {
+      case 'GET':
+      default:
+        data = await instance.get(url)
+        break
+
+      case 'POST':
+        data = await instance.post(url, body)
+        break
+
+      case 'PUT':
+        data = await instance.put(url, body)
+        break
+      case 'DELETE':
+        data = await instance.delete(url)
+        break
     }
+
+    return data.data
+  } catch (error: any) {
+    throw error.response && error.response.data ? error.response.data.message : error.message
   }
 }

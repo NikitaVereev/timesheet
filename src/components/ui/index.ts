@@ -1,3 +1,4 @@
 import MyButton from './MyButton.vue'
+import MyField from './MyField.vue'
 
-export default [MyButton]
+export default [MyButton, MyField]
