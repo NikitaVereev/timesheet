@@ -1,6 +1,7 @@
 <script lang="tsx">
 import TaskItem from '@/components/home/home-list/home-item/TaskItem.vue'
 import type { ITask } from '@/components/types/task.interface'
+import TaskItemApi from './home-item/TaskItemApi.vue'
 export default {
   props: {
     tasks: {
@@ -8,14 +9,14 @@ export default {
       required: true
     } as ITask | any
   },
-  components: { TaskItem }
+  components: { TaskItemApi }
 }
 </script>
 
 <template>
   <h1>Список задач</h1>
   <div class="task">
-    <TaskItem
+    <TaskItemApi
       @put="$emit('put', task)"
       @remove="$emit('remove', task)"
       :task="task"

@@ -26,8 +26,8 @@ export default {
       console.log(this.tasks.length)
       this.deleteTasks(task)
     },
-    addNewTask(task: any, allTasks: any) {
-      this.postProjects(task, allTasks)
+    addNewTask(task: any) {
+      this.postProjects(task)
     },
     putProjectTask(task: any) {
       this.putProject(task)
@@ -104,7 +104,6 @@ export default {
       <TaskForm @create="addNewTask" />
       <h1>Задачи</h1>
 
-      <div>{{ formattedDate }}</div>
       <TaskList @put="putProjectTask" @remove="removeTask" :tasks="tasks" />
     </div>
   </div>
