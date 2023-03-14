@@ -12,20 +12,10 @@ const { data: tasks, isLoading }: any = useQuery(['all projects'], () =>
   ProjectService.getAllProjects()
 )
 
+console.log(tasks)
 const { mutate: deleteMutate } = useMutation(
   ['create new project'],
   (data: any) => ProjectService.deleteProject(data),
-
-  {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries()
-    }
-  }
-)
-
-const { mutate: changeMutate } = useMutation(
-  ['change project'],
-  (data: any) => ProjectService.changeProject(data, data.id),
 
   {
     onSuccess: (data) => {
@@ -38,11 +28,6 @@ const removeTask = (data: any) => {
   deleteMutate(data.id)
   console.log(data.id)
 }
-
-const putProjectTask = (data: any) => {
-  changeMutate(data, data.id)
-  console.log(data.id)
-}
 </script>
 
 <template>
@@ -51,8 +36,8 @@ const putProjectTask = (data: any) => {
       <h1>Проект</h1>
       <TaskForm />
       <h1>Задачи</h1>
-
-      <TaskList @put="putProjectTask" @remove="removeTask" :tasks="tasks" />
+      <div v-if="isLoading" class="pac-man"></div>
+      <div v-else><TaskList @remove="removeTask" :tasks="tasks" /></div>
     </div>
   </div>
 </template>
