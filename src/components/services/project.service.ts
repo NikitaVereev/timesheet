@@ -3,7 +3,7 @@ import axios from 'axios'
 export const ProjectService = {
   async getAllProjects() {
     try {
-      const response = await axios.get('https://634bc632d90b984a1e3f3996.mockapi.io/api')
+      const response = await axios.get('http://localhost:5000/api/projects')
       return response.data
     } catch (e) {
       console.error(e)

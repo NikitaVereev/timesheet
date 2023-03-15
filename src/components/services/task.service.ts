@@ -1,6 +1,14 @@
 import axios from 'axios'
 
 export const TaskService = {
+  async getAllTasksNode() {
+    try {
+      const response = await axios.get('http://localhost:5000/api/task')
+      return response.data
+    } catch (e) {
+      console.error(e)
+    }
+  },
   async getProjectById(id: string | string[]) {
     try {
       const response = await axios.get(`https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}`)

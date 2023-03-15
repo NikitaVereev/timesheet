@@ -14,8 +14,9 @@ const { data: projectDetails, isLoading: getLoading }: any = useQuery(
   () => TaskService.getProjectById(router.params.id)
 )
 
-const { data: taskList }: any = useQuery(['all tasks in project'], () =>
-  TaskService.getAllTasks(router.params.id)
+const { data: taskList, isLoading: getAllTasksLoading }: any = useQuery(
+  ['all tasks in project'],
+  () => TaskService.getAllTasks(router.params.id)
 )
 
 const { mutate: deleteMutate, isLoading } = useMutation(
@@ -43,6 +44,7 @@ console.log(projectDetails)
     {{ projectDetails.title }}
     {{ projectDetails.body }}
     <div v-if="isLoading" class="pac-man"></div>
+    <div v-else-if="getAllTasksLoading" class="pac-man"></div>
     <div v-else>
       <SingleTaskList @remove="removeTask" :taskList="taskList" />
     </div>

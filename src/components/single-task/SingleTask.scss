@@ -21,3 +21,10 @@
 .progress span {
   @apply w-full h-full top-0 left-0 rounded-full border-2 cursor-pointer border-solid border-[#f7f7] absolute;
 }
+.show {
+  @apply p-2 border border-solid bg-lime-800 border-teal-500 rounded-3xl;
+}
+
+.content {
+  @apply bg-slate-700 p-3;
+}

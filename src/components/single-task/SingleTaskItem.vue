@@ -86,6 +86,7 @@ function dateDiff(date1, date2) {
     seconds: seconds
   }
 }
+console.log(new Date(completedTask - getCurrentDate))
 
 var d1 = new Date(completedTask)
 var d2 = new Date(getCurrentDate)
@@ -100,11 +101,15 @@ const getMeInformation =
   diff.hours +
   ' часов, ' +
   diff.minutes +
-  ' минут, ' +
-  diff.seconds +
-  ' секунд'
+  ' минут '
 const completedProject = !props.task.isActive
-console.log(diff.years + diff.months + diff.days + diff.hours + diff.minutes + diff.seconds)
+
+function convert() {
+  var date = new Date(props.task.postingAccounting.date),
+    mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+    day = ('0' + date.getDate()).slice(-2)
+  return [date.getFullYear(), mnth, day].join('-')
+}
 
 const toggleCompleted = (task: any) => {
   mutate({ isActive: completedProject, completedTask: new Date() })
@@ -119,7 +124,7 @@ const toggleCompleted = (task: any) => {
     </button>
 
     {{ task.isActive }}
-    <p>Задача была создана: {{ task.createdAt }}</p>
+    <p>Задача была создана: {{ new Date(task.createdAt * 1000) }}</p>
     <p>Предположительное время выполнения задачи: {{ props.task.time }} ч.</p>
     <p>Реальное время выполнения: {{ getMeInformation }}</p>
 
@@ -129,6 +134,16 @@ const toggleCompleted = (task: any) => {
     <p>Описание задачи</p>
     <FormInput v-model="body" name="Описание проекта" type="text" @input="onBody" />
     {{ body }}
+
+    <div class="show">
+      <h1>Проводки</h1>
+      <div class="showWrapper">
+        <div class="content">
+          <h2>Описание проводки: {{ task.postingAccounting.description }}</h2>
+          <p>Дата проводки: {{ convert(task) }}</p>
+        </div>
+      </div>
+    </div>
     <my-button @click="putProjectTask">Редактировать</my-button>
     <my-button @click="$emit('remove', task)">Удалить</my-button>
   </div>
