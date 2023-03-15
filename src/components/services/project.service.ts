@@ -9,23 +9,31 @@ export const ProjectService = {
       console.error(e)
     }
   },
+  async getSingleProject(_id: string | string[]) {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/projects/${_id}`)
+      return response.data
+    } catch (e) {
+      console.error(e)
+    }
+  },
   async createProject(data: any) {
     try {
-      return axios.post('https://634bc632d90b984a1e3f3996.mockapi.io/api', data)
+      return axios.post('http://localhost:5000/api/projects', data)
     } catch (e) {
       console.error(e)
     }
   },
-  async deleteProject(id: string) {
+  async deleteProject(data: string) {
     try {
-      return axios.delete(`https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}`)
+      return axios.delete(`http://localhost:5000/api/projects`, { data })
     } catch (e) {
       console.error(e)
     }
   },
-  async changeProject(data: any, id: string) {
+  async changeProject(data: any) {
     try {
-      return axios.put(`https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}`, data)
+      return axios.put(`http://localhost:5000/api/projects`, data)
     } catch (e) {
       console.error(e)
     }

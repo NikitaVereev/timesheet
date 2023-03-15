@@ -1,8 +1,6 @@
-<script setup lang="tsx">
-import { ProjectService } from '@/components/services/project.service'
-import type { ITask } from '@/components/types/task.interface'
-import FormInput from '../../../ui/ApiInput.vue'
-import router from '@/router'
+<script setup lang="ts">
+import { TaskService } from '../services/task.service'
+import FormInput from '@/components/ui/ApiInput.vue'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { ref } from 'vue'
 
@@ -26,7 +24,7 @@ const handleCreate = (data: any) => {
   console.log(data)
 }
 const { isLoading, isError, error, isSuccess, mutate } = useMutation({
-  mutationFn: (newTodo) => ProjectService.createProject(newTodo),
+  mutationFn: (newTodo) => TaskService.createTask(newTodo),
   onSuccess: (data) => {
     queryClient.invalidateQueries()
   }
@@ -45,7 +43,7 @@ function addTodo() {
   <div>{{ title }}</div>
   {{ body }}
   <span v-if="isLoading">Adding todo...</span>
-  <span v-else-if="isError">An error occurred: {{ error.message }}</span>
+
   <span v-else-if="isSuccess">Todo added!</span>
   <button @click="addTodo">Create Todo</button>
 </template>

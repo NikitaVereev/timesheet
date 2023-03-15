@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 
 export const TaskService = {
   async getAllTasksNode() {
@@ -28,26 +28,24 @@ export const TaskService = {
       console.error(e)
     }
   },
-  async deleteTask(data: any, id: string | string[]) {
+
+  async createTask(data: any) {
     try {
-      return axios.delete(`https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}/tasks/${data}`)
+      return axios.post('http://localhost:5000/api/task', data)
     } catch (e) {
       console.error(e)
     }
   },
-  async postTask(data: any, id: string | string[]) {
+  async changeTask(data: any) {
     try {
-      return axios.post(`https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}/tasks`, data)
+      return axios.put(`http://localhost:5000/api/task`, data)
     } catch (e) {
       console.error(e)
     }
   },
-  async changeTask(data: any, id: string | string[], taskId: string | string[]) {
+  async whyYouDontDelete(data: string) {
     try {
-      return axios.put(
-        `https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}/tasks/${taskId}`,
-        data
-      )
+      return axios.delete(`http://localhost:5000/api/task`, { data })
     } catch (e) {
       console.error(e)
     }

@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { ITask } from '@/components/types/task.interface'
-import TaskItem from './home-item/TaskItem.vue'
+import TaskItem from './TaskItem.vue'
 export default {
   props: {
     tasks: {
@@ -20,5 +20,10 @@ export default {
 </template>
 
 <style scoped>
-@import './TaskList.scss';
+h1 {
+  @apply text-2xl font-bold pb-1;
+}
+.task {
+  @apply flex flex-wrap gap-6 items-start py-3 my-5;
+}
 </style>

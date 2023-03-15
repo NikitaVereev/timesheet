@@ -141,6 +141,7 @@ const toggleCompleted = (task: any) => {
         <div class="content">
           <h2>Описание проводки: {{ task.postingAccounting.description }}</h2>
           <p>Дата проводки: {{ convert(task) }}</p>
+          <my-button>Что?</my-button>
         </div>
       </div>
     </div>
