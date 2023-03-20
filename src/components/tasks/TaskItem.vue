@@ -15,13 +15,6 @@ const onTitle = (e: { target: { value: string } }) => {
 const onBody = (e: { target: { value: string } }) => {
   body.value = e.target.value
 }
-const completedProject = !props.task.isActive
-
-const toggleCompleted = (task: any) => {
-  mutate({ isActive: completedProject })
-  console.log(props.task.isActive)
-}
-
 const queryClient = useQueryClient()
 const {
   mutate: change,
@@ -41,18 +34,34 @@ const putProjectTask = (task: any) => {
   change({ title: title.value, body: body.value, taskId: props.task._id })
   console.log(props.task._id, title.value)
 }
+
+const { mutate: changeCompleted } = useMutation({
+  mutationFn: (data: any) => TaskService.changeTask(data),
+
+  onSuccess: (data) => {
+    queryClient.invalidateQueries()
+    console.log('Нет')
+  }
+})
+
+const toggleCompleted = (task: any) => {
+  changeCompleted({
+    isActive: !props.task.isActive,
+    taskId: props.task._id,
+    title: title.value,
+    body: body.value
+  })
+}
 const { mutate } = useMutation({
   mutationFn: (data: any) => TaskService.whyYouDontDelete(data),
 
   onSuccess: (data) => {
     queryClient.invalidateQueries()
-    console.log('Ты молодец')
   }
 })
 
 const removeTask = (task: any) => {
   mutate({ taskId: props.task._id })
-  console.log(props.task._id)
 }
 </script>
 
@@ -69,14 +78,14 @@ const removeTask = (task: any) => {
       <FormInput v-model="body" name="Описание проекта" type="text" @input="onBody" />
       {{ body }}
     </div>
-    <button class="progress">
+    <button @click="toggleCompleted" class="progress">
       <span v-if="!task.isActive"></span>
       <img v-else src="@/assets/images/completed.png" alt="{{ props.task.isActive }}" />
     </button>
 
     {{ task.isActive }}
     <div class="btn-wrapper">
-      <my-button><RouterLink :to="`/task/${task.id}`">Показать</RouterLink></my-button>
+      <my-button><RouterLink :to="`/task/${task._id}`">Показать</RouterLink></my-button>
       <RouterView></RouterView>
       <my-button @click="putProjectTask">Редактировать</my-button>
 

@@ -1,16 +1,12 @@
-<script lang="tsx">
-import SingleTask from '@/components/single-task/SingleTask.vue'
-export default {
-  components: {
-    SingleTask
-  }
-}
+<script setup lang="ts">
+import MyPosts from '@/components/posting/MyPosts.vue'
 </script>
 
 <template>
-  <div class="wrapper">
-    <SingleTask />
+  <div class="about">
+    <h1>Это страница с задачей, одной</h1>
+    <MyPosts />
   </div>
 </template>
 
-<style scoped></style>
+<style></style>

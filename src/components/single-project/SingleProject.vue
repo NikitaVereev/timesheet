@@ -1,55 +1,100 @@
 <script setup lang="ts">
 import { ProjectService } from '../services/project.service'
-import { useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { useRoute } from 'vue-router'
 import Multiselect from '@vueform/multiselect'
-import { ref, type Ref } from 'vue'
+import { ref, toRaw, type Ref } from 'vue'
 import { TaskService } from '../services/task.service'
+import SingleProjectTasks from './SingleProjectTasks.vue'
 
-const { data: tasks }: any = useQuery(['tasks list'], () => TaskService.getAllTasksNode())
-
-const value: Ref<never[]> = ref([])
-const options = tasks
-
-console.log(tasks)
-
-const open = () => {
-  console.log(value.value)
-}
+const { data: tasks }: any = useQuery(['all tasks in single project'], () =>
+  TaskService.getAllTasksNode()
+)
+const value = ref([])
 
 const router = useRoute()
 
 const { data, isLoading }: any = useQuery(['single project'], () =>
   ProjectService.getSingleProject(router.params.id)
 )
+
+const queryClient = useQueryClient()
+
+const { mutate: change } = useMutation({
+  mutationFn: (data: any) => ProjectService.changeProject(data),
+
+  onSuccess: (data) => {
+    queryClient.invalidateQueries()
+    console.log('Ты молодец')
+  }
+})
+
+const putProjectTask = (task: any) => {
+  change({
+    title: 'dfdf',
+    body: 'dfdf',
+    taskIdx: value.value,
+    projectId: router.params.id
+  })
+
+  console.log(value.value)
+}
 </script>
 
 <template>
   <div>
-    Привет!)
     <div>
-      <h1>{{ data.title }}</h1>
+      <div class="pac-man" v-if="isLoading"></div>
+      <h1 v-else>{{ data.title }}</h1>
+
       <h3>{{ data.body }}</h3>
-      {{ tasks }}
     </div>
-    <Multiselect
-      v-model="value"
-      mode="tags"
-      placeholder="Select your characters"
-      :options="options"
-      :searchable="true"
-      :createTag="true"
-    />
-    <my-button @click="open">Отправить</my-button>
+    <div>
+      <Multiselect
+        v-model="value"
+        mode="tags"
+        placeholder="Select your characters"
+        :options="
+        tasks.map((t: any) => ({
+          value: t._id,
+          label: t.title
+        }))
+      "
+        :searchable="true"
+      />
+      <RouterLink to="/about">Создать задачу</RouterLink>
+    </div>
+
+    <my-button @click="putProjectTask">Отправить</my-button>
   </div>
+  <SingleProjectTasks :projectTask="data" />
 </template>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
 .multiselect {
   @apply bg-black;
+  width: 50% !important;
 }
-.multiselect-dropdown {
-  @apply bg-black;
+.multiselect-dropdown,
+.multiselect .multiselect-tags-search {
+  background: #000 !important;
+}
+.multiselect-tags-search {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  left: 0;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
 }
 </style>

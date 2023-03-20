@@ -9,26 +9,14 @@ export const TaskService = {
       console.error(e)
     }
   },
-  async getProjectById(id: string | string[]) {
+  async getProjectById(_id: string | string[]) {
     try {
-      const response = await axios.get(`https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}`)
-      console.log(response.data)
+      const response = await axios.get(`http://localhost:5000/api/task/${_id}`)
       return response.data
     } catch (e) {
       console.error(e)
     }
   },
-  async getAllTasks(id: string | string[]) {
-    try {
-      const response = await axios.get(
-        `https://634bc632d90b984a1e3f3996.mockapi.io/api/${id}/tasks`
-      )
-      return response.data
-    } catch (e) {
-      console.error(e)
-    }
-  },
-
   async createTask(data: any) {
     try {
       return axios.post('http://localhost:5000/api/task', data)
@@ -39,6 +27,13 @@ export const TaskService = {
   async changeTask(data: any) {
     try {
       return axios.put(`http://localhost:5000/api/task`, data)
+    } catch (e) {
+      console.error(e)
+    }
+  },
+  async changeCompletedTask(data: any, _id: string | string[]) {
+    try {
+      return axios.put(`http://localhost:5000/api/task/${_id}`, data)
     } catch (e) {
       console.error(e)
     }
