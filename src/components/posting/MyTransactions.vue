@@ -16,7 +16,12 @@ const { data: transactionData, isLoading }: any = useQuery(
 <template>
   <div class="transaction">
     <h2>Задачи</h2>
-    <MyTransactionForm :transactionId="transactions._id" />
+    <div v-if="isLoading"></div>
+    <MyTransactionForm
+      v-else
+      :transactionData="transactionData"
+      :transactionId="transactions._id"
+    />
 
     <div v-if="isLoading"></div>
 

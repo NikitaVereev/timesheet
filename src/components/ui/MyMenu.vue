@@ -1,13 +1,11 @@
 <script lang="tsx">
-import toggleMixin from '@/components/mixins/toggleMixin'
 export default {
-  name: 'my-menu',
-  mixins: [toggleMixin]
+  name: 'my-menu'
 }
 </script>
 
 <template>
-  <div v-if="show" @click="closeMenu" class="wrapper">
+  <div class="wrapper">
     <div @click.stop class="content">
       <slot></slot>
     </div>

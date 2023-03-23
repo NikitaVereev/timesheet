@@ -99,9 +99,11 @@ let color = ''
 
 if (diff.hours > 8) {
   color = 'red'
-} else if (diff.hours < 8) {
+} else if (diff.hours < 8 && diff.hours > 1) {
   color = 'yellow'
-} else {
+} else if (diff.hours > 1) {
+  color = 'neutral'
+} else if (diff.hours === 8) {
   color = 'green'
 }
 </script>
@@ -109,7 +111,12 @@ if (diff.hours > 8) {
 <template>
   <div
     class="transactionItem"
-    :class="{ green: color === 'green', red: color === 'red', yellow: color === 'yellow' }"
+    :class="{
+      green: color === 'green',
+      red: color === 'red',
+      yellow: color === 'yellow',
+      neutral: color === 'neutral'
+    }"
     v-if="props.transaction.transactionId === props.transactions._id"
   >
     <div class="transactionHeading">
@@ -139,7 +146,11 @@ if (diff.hours > 8) {
 
 <style scoped>
 .transactionItem {
-  @apply p-5 border border-solid border-teal-500 rounded-3xl w-[31%]  relative bg-black bg-opacity-60;
+  @apply p-5 border border-solid border-teal-500 rounded-3xl w-[31%]  relative;
+}
+
+.transactionItem.neutral {
+  @apply bg-black bg-opacity-60;
 }
 .transactionItem.red {
   @apply bg-red-700 bg-opacity-70;

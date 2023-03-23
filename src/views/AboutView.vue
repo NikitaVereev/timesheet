@@ -3,8 +3,7 @@ import MyTasks from '@/components/tasks/MyTasks.vue'
 </script>
 
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="wrapper">
     <MyTasks />
   </div>
 </template>

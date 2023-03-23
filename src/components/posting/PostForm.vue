@@ -1,49 +1,38 @@
 <script lang="ts" setup>
 import { PostingService } from '../services/posting.service'
 import { useRoute } from 'vue-router'
-import FormInput from '@/components/ui/ApiInput.vue'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { ref } from 'vue'
 
-const description = ref('')
-const hours = ref('')
-
-const onDescription = (e: { target: { value: string } }) => {
-  description.value = e.target.value
-}
-const onHours = (e: { target: { value: string } }) => {
-  hours.value = e.target.value
-}
-
-const Submit = () => {
-  console.log(description.value)
-}
 const queryClient = useQueryClient()
 const router = useRoute()
+const props = defineProps({ posts: { type: Object, required: true } })
+
+const stopPosting = props.posts.map(
+  (post: { itsMyDay: string }) =>
+    post.itsMyDay !== new Date().toISOString().slice(0, 10) + 'T03:00:00.000Z'
+)
 
 const {
   isLoading,
   mutate: createPost,
   isSuccess
 } = useMutation({
-  mutationFn: () => PostingService.createPost(router.params.id),
+  mutationFn: (data: any) => PostingService.createPost(router.params.id, data),
   onSuccess: (data) => {
     queryClient.invalidateQueries
   }
 })
 
 function addPost() {
-  createPost()
+  if (stopPosting.length === 0) {
+    createPost({ itsMyMonth: new Date().getMonth() })
+  } else {
+    console.log('Завтра дождись')
+  }
 }
 </script>
 
 <template>
-  <form @submit.prevent="Submit">
-    <FormInput v-model="description" name="Описание проводки" type="text" @input="onDescription" />
-    <FormInput v-model="hours" name="Время на проводку в часах" type="number" @input="onHours" />
-  </form>
-  {{ description }}
-  {{ hours }}
   <span v-if="isLoading">Adding todo...</span>
 
   <span v-else-if="isSuccess">Todo added!</span>

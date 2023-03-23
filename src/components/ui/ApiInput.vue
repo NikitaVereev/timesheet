@@ -22,3 +22,9 @@ defineEmits(['update:modelValue'])
     <br />
   </div>
 </template>
+
+<style scoped>
+input {
+  @apply bg-black bg-opacity-50 border-2 border-solid border-teal-500;
+}
+</style>

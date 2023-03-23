@@ -17,6 +17,13 @@ export const ProjectService = {
       console.error(e)
     }
   },
+  async changeSingleProjectTasks(_id: string | string[], data: any) {
+    try {
+      return axios.put(`http://localhost:5000/api/projects/${_id}`, data)
+    } catch (e) {
+      console.error(e)
+    }
+  },
   async createProject(data: any) {
     try {
       return axios.post('http://localhost:5000/api/projects', data)

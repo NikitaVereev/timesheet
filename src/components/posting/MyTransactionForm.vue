@@ -3,16 +3,42 @@ import { TransactionsService } from '../services/transaction.service'
 import { useRoute } from 'vue-router'
 import FormInput from '@/components/ui/ApiInput.vue'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
-const props = defineProps({ transactionId: { type: String, required: true } })
+const props = defineProps({
+  transactionId: { type: String, required: true },
+  transactionData: { type: Object, required: true }
+})
+
+const lol = props.transactionData
+  .filter((post: { transactionId: string }) => post.transactionId === props.transactionId)
+  .map((item: { hours: number }) => item.hours)
+
+var summa = 0
+for (let i = 0; i < lol.length; i++) {
+  summa += lol[i]
+}
+console.log(summa)
 
 const description = ref('')
-const hours = ref('')
+
+const state = reactive({ count: 0 })
+
+const increment = () => {
+  if (state.count < 24 - summa) {
+    state.count++
+  } else {
+    console.log('gg')
+  }
+}
+
+const decrement = () => {
+  if (state.count > 0) {
+    state.count--
+  }
+}
 
 const onDescription = (e: { target: { value: string } }) => (description.value = e.target.value)
-
-const onHours = (e: { target: { value: string } }) => (hours.value = e.target.value)
 
 const queryClient = useQueryClient()
 const router = useRoute()
@@ -28,21 +54,33 @@ const {
     queryClient.invalidateQueries()
   }
 })
-console.log(props.transactionId)
 
 function addTransaciton() {
-  createTransaction({ description: description.value, hours: hours.value })
+  if (summa < 25) {
+    createTransaction({ description: description.value, hours: state.count })
+    window.location.reload()
+  } else {
+    console.log('Вы больше не можете вводить задачи, ')
+  }
 }
 </script>
 
 <template>
-  <form>
-    <FormInput v-model="description" name="Описание задачи" type="text" @input="onDescription" />
-    <FormInput v-model="hours" name="Время на задачу в часах" type="number" @input="onHours" />
-  </form>
-  {{ description }}
-  {{ hours }}
-  <span v-if="isLoading">Создание...</span>
-  <span v-else-if="isSuccess">Создано!</span>
-  <my-button @click="addTransaciton">Создать</my-button>
+  <div v-if="summa >= 24"><h1>Вы ввели максимальное время, дождитесь завтра</h1></div>
+  <div v-else>
+    <form @submit.prevent>
+      <FormInput v-model="description" name="Описание задачи" type="text" @input="onDescription" />
+
+      <div>
+        <my-button @click="decrement">-</my-button>
+        {{ state.count }}
+        <my-button @click="increment">+</my-button>
+      </div>
+    </form>
+    {{ description }}
+
+    <span v-if="isLoading">Создание...</span>
+    <span v-else-if="isSuccess">Создано!</span>
+    <my-button @click="addTransaciton">Создать</my-button>
+  </div>
 </template>

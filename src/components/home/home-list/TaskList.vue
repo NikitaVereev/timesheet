@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <h1>Список задач</h1>
+  <h1>Список проектов</h1>
   <div class="task">
     <TaskItem :task="task" v-for="task in tasks" :key="task.id" />
   </div>

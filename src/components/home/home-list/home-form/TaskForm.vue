@@ -33,19 +33,22 @@ const { isLoading, isError, error, isSuccess, mutate } = useMutation({
 })
 
 function addTodo() {
+  //@ts-ignore
   mutate({ title: title.value, body: body.value })
 }
 </script>
 
 <template>
   <form @submit.prevent="Submit">
+    <h1>Создать проект</h1>
     <FormInput v-model="title" name="Название проекта" type="text" @input="onTitle" />
+    <h1>{{ title }}</h1>
     <FormInput v-model="body" name="Описание проекта" type="text" @input="onBody" />
+    <button @click="addTodo">
+      <span v-if="isLoading">Adding todo...</span>
+      <span v-else-if="isSuccess">Todo added!</span>Create Todo
+    </button>
   </form>
-  <div>{{ title }}</div>
-  {{ body }}
-  <span v-if="isLoading">Adding todo...</span>
-  <span v-else-if="isError">An error occurred: {{ error.message }}</span>
-  <span v-else-if="isSuccess">Todo added!</span>
-  <button @click="addTodo">Create Todo</button>
+
+  <!-- {{ body }} -->
 </template>

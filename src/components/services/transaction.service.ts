@@ -11,6 +11,7 @@ export const TransactionsService = {
       console.error(e)
     }
   },
+
   async createTransactions(
     _id: string | string[],
     tr_id: string | string[],

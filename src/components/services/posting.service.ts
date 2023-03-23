@@ -9,9 +9,19 @@ export const PostingService = {
       console.error(e)
     }
   },
-  async createPost(_id: string | string[]) {
+  async getByOneDay(_id: string | string[], data: any) {
     try {
-      return axios.post(`http://localhost:5000/api/task/${_id}/transactions`)
+      const response = await axios.get(
+        `http://localhost:5000/api/task/${_id}/transactions/date/${data}`
+      )
+      return response.data
+    } catch (e) {
+      console.error(e)
+    }
+  },
+  async createPost(_id: string | string[], data: any) {
+    try {
+      return axios.post(`http://localhost:5000/api/task/${_id}/transactions`, data)
     } catch (e) {
       console.error(e)
     }

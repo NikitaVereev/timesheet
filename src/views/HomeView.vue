@@ -4,7 +4,7 @@ import '@/components/home/MyHome.vue'
 </script>
 
 <template>
-  <main>
+  <main class="wrapper">
     <MyHome />
   </main>
 </template>

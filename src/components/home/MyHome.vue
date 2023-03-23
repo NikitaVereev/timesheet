@@ -14,9 +14,8 @@ console.log(tasks)
 <template>
   <div class="wrapper">
     <div class="tasks">
-      <h1>Проект</h1>
       <TaskForm />
-      <h1>Задачи</h1>
+      <h1>Проекты</h1>
       <div v-if="isLoading" class="pac-man"></div>
       <div v-else><TaskList :tasks="tasks" /></div>
     </div>

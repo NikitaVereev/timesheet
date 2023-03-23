@@ -31,6 +31,7 @@ const { isLoading, isError, error, isSuccess, mutate } = useMutation({
 })
 
 function addTodo() {
+  //@ts-ignore
   mutate({ title: title.value, body: body.value })
 }
 </script>
