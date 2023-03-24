@@ -24,11 +24,11 @@ const {
 })
 
 function addPost() {
-  if (stopPosting.length === 0) {
-    createPost({ itsMyMonth: new Date().getMonth() })
-  } else {
-    console.log('Завтра дождись')
-  }
+  // if (stopPosting.length === 0) {
+  createPost({ itsMyMonth: new Date().getMonth() })
+  // // } else {
+  // //   console.log('Завтра дождись')
+  // }
 }
 </script>
 

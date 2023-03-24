@@ -3,7 +3,7 @@ import MyPosts from '@/components/posting/MyPosts.vue'
 </script>
 
 <template>
-  <div class="about">
+  <div class="wrapper">
     <MyPosts />
   </div>
 </template>

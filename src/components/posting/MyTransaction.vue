@@ -2,6 +2,7 @@
 import { TransactionsService } from '../services/transaction.service'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { useRoute } from 'vue-router'
+import { ref, watch, onMounted } from 'vue'
 
 const router = useRoute()
 const queryClient = useQueryClient()
@@ -99,13 +100,69 @@ let color = ''
 
 if (diff.hours > 8) {
   color = 'red'
-} else if (diff.hours < 8 && diff.hours > 1) {
+} else if (diff.hours < 8 && diff.minutes > 0) {
   color = 'yellow'
-} else if (diff.hours > 1) {
+} else if (diff.minutes < 1) {
   color = 'neutral'
 } else if (diff.hours === 8) {
   color = 'green'
 }
+let hour = ref<number>(diff.hours)
+let minute = ref<number>(diff.minutes)
+let second = ref<number>(diff.seconds)
+let interval: ReturnType<typeof setInterval> | null = null
+
+const startStopwatch = () => {
+  if (interval === null) {
+    interval = setInterval(() => {
+      second.value++
+      if (second.value === 60) {
+        second.value = 0
+        minute.value++
+      }
+      if (minute.value === 60) {
+        minute.value = 0
+        hour.value++
+      }
+    }, 1000)
+  }
+}
+
+const stopStopwatch = () => {
+  if (interval !== null) {
+    clearInterval(interval)
+    interval = null
+  }
+}
+
+const resetStopwatch = () => {
+  hour.value = 0
+  minute.value = 0
+  second.value = 0
+  stopStopwatch()
+}
+
+watch(hour, () => {
+  if (hour.value < 10) {
+    hour.value = Number('0' + hour.value)
+  }
+})
+
+watch(minute, () => {
+  if (minute.value < 10) {
+    minute.value = Number('0' + minute.value)
+  }
+})
+
+watch(second, () => {
+  if (second.value < 10) {
+    second.value = Number('0' + second.value)
+  }
+})
+
+onMounted(() => {
+  resetStopwatch()
+})
 </script>
 
 <template>
@@ -133,6 +190,14 @@ if (diff.hours > 8) {
         <p class="bigText">{{ props.transaction.hours }} ч.</p>
       </div>
       <div>
+        <div>
+          <div class="stopwatch">{{ hour }} : {{ minute }} : {{ second }}</div>
+          <div class="controls">
+            <button @click="startStopwatch">Start</button>
+            <button @click="stopStopwatch">Stop</button>
+            <button @click="resetStopwatch">Reset</button>
+          </div>
+        </div>
         <h4>Потрачено времени</h4>
         <p>{{ diff.hours }}ч. {{ diff.minutes }} м.</p>
       </div>

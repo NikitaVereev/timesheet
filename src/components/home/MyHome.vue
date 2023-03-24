@@ -12,7 +12,7 @@ console.log(tasks)
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapperInner">
     <div class="tasks">
       <TaskForm />
       <h1>Проекты</h1>

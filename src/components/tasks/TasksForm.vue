@@ -38,6 +38,7 @@ function addTodo() {
 
 <template>
   <form @submit.prevent="Submit">
+    <h1>Создать задачу</h1>
     <FormInput v-model="title" name="Название проекта" type="text" @input="onTitle" />
     <FormInput v-model="body" name="Описание проекта" type="text" @input="onBody" />
   </form>

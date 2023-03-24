@@ -3,15 +3,15 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
+  <main>
+    <div>
       <h3>Корпоративный портал учёта рабочего времени</h3>
       <nav>
         <RouterLink to="/">Проекты</RouterLink>
         <RouterLink to="/about">Задачи</RouterLink>
       </nav>
     </div>
-  </header>
+  </main>
 
   <RouterView />
 </template>

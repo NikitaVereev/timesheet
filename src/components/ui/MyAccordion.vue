@@ -30,12 +30,12 @@ export default {
 
 <style>
 .accordion {
-  @apply border-solid border border-teal-800 rounded-3xl mb-3;
+  @apply border-solid outline outline-teal-800 rounded-3xl mb-3;
 }
 
 .accordion-header {
   transition: 0.5s ease;
-  @apply p-3 cursor-pointer flex justify-between items-center rounded-3xl outline outline-teal-500;
+  @apply p-3 cursor-pointer flex justify-between items-center rounded-3xl outline outline-teal-500 relative z-10;
 }
 .accordion-header:hover {
   @apply bg-teal-500;

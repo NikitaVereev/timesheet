@@ -21,6 +21,7 @@
     "select2-vue-component": "^6.1.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
+    "vue-timer-hook": "^1.0.66",
     "vuejs-datepicker": "^1.6.2",
     "vuetify": "^3.1.10",
     "vuex": "^4.1.0"

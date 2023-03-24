@@ -12,10 +12,10 @@ export default {
 
 <style>
 .btn {
-  @apply py-2 px-4 border-2 border-solid border-teal-500;
+  @apply py-2 px-4  bg-black bg-opacity-40 font-bold outline m-3 rounded-2xl outline-teal-500;
   transition: 0.5s ease;
 }
 .btn:hover {
-  @apply bg-teal-500 text-black;
+  @apply bg-teal-500  outline-white tracking-wide;
 }
 </style>

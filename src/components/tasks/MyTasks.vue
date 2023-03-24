@@ -10,7 +10,7 @@ const { data: tasks, isLoading }: any = useQuery(['all tasks'], () => TaskServic
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapperInner">
     <div class="tasks">
       <TasksForm />
       <h1>Задачи</h1>

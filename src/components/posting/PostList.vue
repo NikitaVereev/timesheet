@@ -44,7 +44,7 @@ const filteredItems = computed(() => {
     return add
   } else if (month.value !== '') {
     const daa = newPosts.filter((post: any) => post.itsMyMonth === month.value)
-
+    console.log(filteredItems.value.length)
     return daa
   } else {
     return newPosts
@@ -65,7 +65,7 @@ const filteredItems = computed(() => {
     />
     <VueDatePicker :model-value="month" @update:model-value="setMonth" month-picker />
   </div>
-  {{ date.slice(0, 7) }}
+  <h1 v-if="filteredItems.length === 0">Проводок нет!</h1>
   <div v-for="singlePost in filteredItems" :key="singlePost._id">
     <PostItem :singlePost="singlePost" />
   </div>

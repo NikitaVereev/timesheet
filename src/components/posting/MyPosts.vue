@@ -21,7 +21,7 @@ queryClient.invalidateQueries({ queryKey: ['filter'] })
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapperInner">
     <div>
       <div v-if="isLoading">Привет)</div>
       <div v-else>
@@ -30,8 +30,7 @@ queryClient.invalidateQueries({ queryKey: ['filter'] })
           <h2><span>Описание</span> {{ task.body }}</h2>
         </div>
         <div>
-          <h2><span>Время</span> {{ task.time }}</h2>
-          <p><span>Задача была создана</span> {{ task.createdAt }}</p>
+          <h2><span>Задача была создана</span> {{ task.createdAt }}</h2>
         </div>
         <div v-if="loadingPosts"></div>
         <PostForm v-else :posts="posts" />

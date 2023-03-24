@@ -45,7 +45,7 @@ const removePost = (singlePost: any) => {
 
 <style scoped>
 .card {
-  @apply px-4 py-2 rounded-3xl bg-slate-600 border border-solid border-teal-500 flex flex-col  justify-between relative;
+  @apply px-4 py-2 rounded-3xl bg-black bg-opacity-30 border border-solid border-teal-500 flex flex-col  justify-between relative;
 }
 .card > div {
   @apply flex flex-col  gap-3;

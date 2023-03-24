@@ -15,13 +15,13 @@ html {
 }
 
 h1 {
-  @apply text-5xl text-white text-opacity-70 font-bold my-3;
+  @apply text-5xl text-white text-opacity-70 gap-2 font-bold my-3 flex items-start;
 }
 h1 span {
   @apply text-4xl;
 }
 h2 {
-  @apply text-3xl text-white text-opacity-60 font-bold;
+  @apply text-3xl flex items-start gap-2 text-white text-opacity-60 font-bold;
 }
 h2 span {
   @apply text-2xl;
@@ -34,8 +34,12 @@ form {
 }
 
 input {
-  background: #000 !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+
   color: #fff !important;
+  outline: 3.2px solid rgb(20 184 166) !important;
+
+  border: none !important;
 }
 .multiselect-dropdown {
   background: #000 !important;
@@ -50,6 +54,10 @@ input {
 
 .wrapper {
   @apply max-w-7xl mx-auto  p-4 rounded-3xl bg-black bg-opacity-60 border border-solid border-teal-600;
+  backdrop-filter: blur(10px);
+}
+.wrapperInner {
+  @apply max-w-7xl mx-auto  p-4 rounded-3xl bg-teal-500 bg-opacity-40 border border-solid border-teal-600;
   backdrop-filter: blur(10px);
 }
 .onlyFlex {

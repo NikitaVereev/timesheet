@@ -44,10 +44,10 @@ function addTodo() {
     <FormInput v-model="title" name="Название проекта" type="text" @input="onTitle" />
     <h1>{{ title }}</h1>
     <FormInput v-model="body" name="Описание проекта" type="text" @input="onBody" />
-    <button @click="addTodo">
+    <my-button @click="addTodo">
       <span v-if="isLoading">Adding todo...</span>
       <span v-else-if="isSuccess">Todo added!</span>Create Todo
-    </button>
+    </my-button>
   </form>
 
   <!-- {{ body }} -->
