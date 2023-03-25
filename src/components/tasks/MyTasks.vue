@@ -4,8 +4,6 @@ import TaskList from './TaskList.vue'
 import TasksForm from './TasksForm.vue'
 import { TaskService } from '../services/task.service'
 
-const queryClient = useQueryClient()
-
 const { data: tasks, isLoading }: any = useQuery(['all tasks'], () => TaskService.getAllTasksNode())
 </script>
 

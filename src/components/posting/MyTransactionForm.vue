@@ -18,7 +18,6 @@ var summa = 0
 for (let i = 0; i < lol.length; i++) {
   summa += lol[i]
 }
-console.log(summa)
 
 const description = ref('')
 
@@ -57,7 +56,11 @@ const {
 
 function addTransaciton() {
   if (summa < 25) {
-    createTransaction({ description: description.value, hours: state.count })
+    createTransaction({
+      description: description.value,
+      hours: state.count,
+      taskId: router.params.id
+    })
     window.location.reload()
   } else {
     console.log('Вы больше не можете вводить задачи, ')

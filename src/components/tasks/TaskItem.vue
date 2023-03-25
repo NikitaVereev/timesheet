@@ -1,11 +1,23 @@
 <script setup lang="tsx">
 import { TaskService } from '../services/task.service'
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import { ref } from 'vue'
 import FormInput from '../ui/ApiInput.vue'
+import { TransactionsService } from '../services/transaction.service'
+import { useRoute } from 'vue-router'
+import { PostingService } from '../services/posting.service'
+const router = useRoute()
 
-const props = defineProps({ task: { type: Object, required: true } })
-
+const props = defineProps({
+  task: { type: Object, required: true },
+  transactionData: { type: Object, required: true }
+})
+const aaa = props.transactionData.filter((i: { taskId: string }) => i.taskId === props.task._id)
+const bbb = aaa.map((i: { completedTime: number }) => i.completedTime)
+let summa = 0
+for (let i = 0; i < bbb.length; i++) {
+  summa += bbb[i]
+}
 const title = ref(props.task.title)
 const body = ref(props.task.body)
 
@@ -15,6 +27,13 @@ const onTitle = (e: { target: { value: string } }) => {
 const onBody = (e: { target: { value: string } }) => {
   body.value = e.target.value
 }
+
+console.log(props.task._id)
+
+// const bbbb = transactionData.value.map((i) => i)
+// const aaaa = bbbb.filter((i) => i.taskId === props.task.taskId)
+// console.log(aaaa)
+
 const queryClient = useQueryClient()
 const {
   mutate: change,
@@ -69,7 +88,7 @@ const removeTask = (task: any) => {
   <div class="task">
     <div class="text-wrapper">
       <h3>Название проекта</h3>
-
+      <h2>Выполнен за {{ summa }} ч.</h2>
       <FormInput v-model="title" name="Название проекта" type="text" @input="onTitle" />
       {{ title }}
     </div>

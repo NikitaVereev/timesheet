@@ -5,7 +5,17 @@ import { ref } from 'vue'
 import FormInput from '../ui/ApiInput.vue'
 import type router from '@/router'
 
-const props = defineProps({ task: { type: Object, required: true } })
+const props = defineProps({
+  task: { type: Object, required: true },
+  transactionData: { type: Object, required: true }
+})
+
+const aaa = props.transactionData.filter((i: { taskId: string }) => i.taskId === props.task._id)
+const bbb = aaa.map((i: { completedTime: number }) => i.completedTime)
+let summa = 0
+for (let i = 0; i < bbb.length; i++) {
+  summa += bbb[i]
+}
 
 const title = ref(props.task.title)
 const body = ref(props.task.body)
@@ -53,6 +63,7 @@ const removeTask = (task: any) => {
     <span>id: {{ props.task._id }}</span>
     <div>
       <span>Время {{ props.task.time }}</span>
+      <h2>{{ summa !== 0 ? `Выполнен за ${summa}  ч.` : null }}</h2>
       <button @click="toggleCompleted" class="progress">
         <span v-if="!task.isActive"></span
         ><img v-else src="@/assets/images/completed.png" alt="{{ props.task.isActive }}" />

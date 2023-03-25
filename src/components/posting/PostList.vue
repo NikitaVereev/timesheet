@@ -15,6 +15,7 @@ const props = defineProps({
   posts: { type: Object, required: true }
   // date: { type: Object, required: true }
 })
+
 let newPosts = props.posts.filter((post: any) => post.taskId === router.params.id)
 
 const setDate = (value: Date) => {
@@ -27,7 +28,7 @@ const setDate = (value: Date) => {
 }
 
 const month = ref('')
-console.log(new Date().getMonth())
+
 const setMonth = (value: any) => {
   month.value = value.month
   console.log(month.value)

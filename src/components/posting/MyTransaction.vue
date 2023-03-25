@@ -35,7 +35,8 @@ const { mutate: changeCompleted } = useMutation({
 const toggleCompleted = (task: any) => {
   changeCompleted({
     isActive: !props.transaction.isActive,
-    postingId: props.transaction._id
+    postingId: props.transaction._id,
+    completedTime: diff.hours
   })
 }
 

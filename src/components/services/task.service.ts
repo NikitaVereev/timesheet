@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 
 export const TaskService = {
   async getAllTasksNode() {
@@ -34,6 +34,13 @@ export const TaskService = {
   async changeCompletedTask(data: any, _id: string | string[]) {
     try {
       return axios.put(`http://localhost:5000/api/task/${_id}`, data)
+    } catch (e) {
+      console.error(e)
+    }
+  },
+  async connectionTaskWithProject(_id: string | string[], data: any) {
+    try {
+      return axios.put(`http://localhost:5000/api/task/${_id}/connection`, data)
     } catch (e) {
       console.error(e)
     }

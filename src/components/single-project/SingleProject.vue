@@ -19,6 +19,8 @@ const { data, isLoading: loadingData }: any = useQuery(['single project'], () =>
   ProjectService.getSingleProject(router.params.id)
 )
 
+console.log(router.params.id)
+
 const queryClient = useQueryClient()
 
 const { mutate: change } = useMutation({
@@ -36,6 +38,13 @@ const { mutate: changeTaskList } = useMutation({
   }
 })
 
+const { mutate: connectionTask } = useMutation({
+  mutationFn: (data: any) => TaskService.connectionTaskWithProject(value.value, data),
+  onSuccess: (data) => {
+    queryClient.invalidateQueries()
+  }
+})
+
 const putProjectTask = (task: any) => {
   change({
     title: 'Проверка',
@@ -44,6 +53,10 @@ const putProjectTask = (task: any) => {
   })
 }
 const putProjectTaskList = (task: any) => {
+  connectionTask({
+    projectId: router.params.id,
+    taskId: value.value
+  })
   changeTaskList({
     taskIdx: value.value
   })
@@ -71,7 +84,7 @@ const putProjectTaskList = (task: any) => {
         mode="tags"
         placeholder="Select your characters"
         :options="
-        tasks.map((t: any) => ({
+        tasks.filter((task: any) => task.projectId === undefined || task.projectId === router.params.id).map((t: any) => ({
           value: t._id,
           label: t.title
         }))
