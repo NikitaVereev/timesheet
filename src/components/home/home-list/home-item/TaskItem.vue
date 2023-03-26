@@ -4,7 +4,21 @@ import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { ref } from 'vue'
 import FormInput from '../../../ui/ApiInput.vue'
 
-const props = defineProps({ task: { type: Object, required: true } })
+const props = defineProps({
+  task: { type: Object, required: true },
+  taskList: { type: Object, required: true }
+})
+
+const filterTask = props.taskList.filter(
+  (task: { projectId: string }) => task.projectId === props.task._id
+)
+const completedProjectTime = filterTask.map((task: { completedTime: number }) => task.completedTime)
+
+let summa = 0
+
+for (let i = 0; i < completedProjectTime.length; i++) {
+  summa += completedProjectTime[i]
+}
 
 const title = ref(props.task.title)
 const body = ref(props.task.body)
@@ -17,6 +31,14 @@ const onBody = (e: { target: { value: string } }) => {
 }
 
 const queryClient = useQueryClient()
+
+const { mutate: changeTime, isLoading: loadingCompletedTimeProject } = useMutation({
+  mutationFn: (data: any) => ProjectService.changeProjectCompleted(props.task._id, data),
+  onSuccess: (data) => {
+    queryClient.invalidateQueries()
+  }
+})
+
 const {
   mutate: change,
   isLoading,
@@ -33,14 +55,13 @@ const {
 
 const putProjectTask = (task: any) => {
   change({ title: title.value, body: body.value, projectId: props.task._id })
-  console.log(props.task._id, title.value, body.value)
 }
 
 const completedProject = !props.task.isActive
 
 const toggleCompleted = (task: any) => {
   change({ isActive: completedProject })
-  console.log(props.task.isActive)
+  changeTime({ completedTime: 4 })
 }
 
 const { mutate } = useMutation({
@@ -61,7 +82,7 @@ const removeTask = (task: any) => {
 <template>
   <div class="task">
     <div class="text-wrapper">
-      <h3>Название проекта</h3>
+      <h2>{{ summa !== 0 ? `Выполнен за ${summa}  ч.` : null }}</h2>
 
       <FormInput v-model="title" name="Название проекта" type="text" @input="onTitle" />
       {{ title }}

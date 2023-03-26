@@ -42,7 +42,8 @@ const toggleCompleted = (task: any) => {
     isActive: !props.task.isActive,
     taskId: props.task._id,
     title: title.value,
-    body: body.value
+    body: body.value,
+    completedTime: summa
   })
 }
 

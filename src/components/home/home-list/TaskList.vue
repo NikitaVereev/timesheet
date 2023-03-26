@@ -1,21 +1,19 @@
-<script lang="tsx">
+<script lang="tsx" setup>
 import type { ITask } from '@/components/types/task.interface'
 import TaskItem from './home-item/TaskItem.vue'
-export default {
-  props: {
-    tasks: {
-      type: Array,
-      required: true
-    } as ITask | any
-  },
-  components: { TaskItem }
-}
+import { useQuery } from '@tanstack/vue-query'
+import { TaskService } from '@/components/services/task.service'
+
+const props: any = defineProps({ tasks: { type: Array, required: true } })
+
+const { data, isLoading } = useQuery(['task list'], () => TaskService.getAllTasksNode())
 </script>
 
 <template>
   <h1>Список проектов</h1>
-  <div class="task">
-    <TaskItem :task="task" v-for="task in tasks" :key="task.id" />
+  <div v-if="isLoading"></div>
+  <div class="task" v-else>
+    <TaskItem :task="task" :taskList="data" v-for="task in props.tasks" :key="task.id" />
   </div>
 </template>
 

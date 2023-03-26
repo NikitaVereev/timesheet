@@ -12,8 +12,10 @@ const { data: transactionData, isLoading: transactionDataLoading }: any = useQue
 </script>
 
 <template>
-  <div v-for="singleProjectTask in props.projectTask.tasks" :key="singleProjectTask._id">
-    <div v-if="transactionDataLoading"></div>
-    <SingleProjectTask v-else :task="singleProjectTask" :transaction-data="transactionData" />
+  <div class="onlyFlex">
+    <div v-for="singleProjectTask in props.projectTask.tasks" :key="singleProjectTask._id">
+      <div v-if="transactionDataLoading"></div>
+      <SingleProjectTask v-else :task="singleProjectTask" :transaction-data="transactionData" />
+    </div>
   </div>
 </template>

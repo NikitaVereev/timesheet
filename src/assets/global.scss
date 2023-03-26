@@ -61,7 +61,13 @@ input {
   backdrop-filter: blur(10px);
 }
 .onlyFlex {
-  @apply flex w-full;
+  @apply flex w-full gap-4;
+}
+.onlyFlex > div {
+  @apply w-[30%];
+}
+.onlyFlex > div > .task {
+  @apply w-full;
 }
 
 .pac-man {

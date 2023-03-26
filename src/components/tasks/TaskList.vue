@@ -24,13 +24,14 @@ const notConnectedTask = props.tasks.filter(
   <h1>Список задач</h1>
   <div class="task">
     <div v-if="transactionDataLoading"></div>
-    <TaskItem
-      v-else
-      :task="task"
-      v-for="task in notConnectedTask"
-      :key="task.id"
-      :transactionData="transactionData"
-    />
+    <div v-else class="onlyFlex">
+      <TaskItem
+        :task="task"
+        v-for="task in notConnectedTask"
+        :key="task.id"
+        :transactionData="transactionData"
+      />
+    </div>
   </div>
 </template>
 
